@@ -1,0 +1,21 @@
+name: Compilar iOS
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Compilar proyecto Xcode
+      run: |
+        xcodebuild build \
+          -scheme $(xcodebuild -list -json | grep -A 1 '"schemes"' | tail -n 1 | tr -d '", ') \
+          -sdk iphoneos \
+          -configuration Release \
+          CODE_SIGNING_ALLOWED=NO
