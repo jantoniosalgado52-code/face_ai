@@ -18,4 +18,11 @@ jobs:
           -scheme $(xcodebuild -list -json | grep -A 1 '"schemes"' | tail -n 1 | tr -d '", ') \
           -sdk iphoneos \
           -configuration Release \
-          CODE_SIGNING_ALLOWED=NO
+          CODE_SIGNING_ALLOWED=NO \
+          CONFIGURATION_BUILD_DIR=build
+
+    - name: Guardar App Compilada
+      uses: actions/upload-artifact@v4
+      with:
+        name: App-iOS-face_ai
+        path: build/*.app
